@@ -17,6 +17,10 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
 
+    FirebaseMessaging.instance.getToken().then((token) {
+      print("This is Token: $token");
+    });
+
     LocalNotificationService.initilize();
 
     // Terminated State
