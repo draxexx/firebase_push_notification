@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'local_notifications.dart';
+import 'notification_providers.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -12,6 +13,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String firebaseMessage = "Waiting for firebase message";
+
+  final NotificationProvider _notificationProvider = NotificationProvider();
 
   @override
   void initState() {
@@ -54,8 +57,22 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text(firebaseMessage),
+      body: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              firebaseMessage,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: () => _notificationProvider.createNotification(),
+              child: const Text("Send Push Notification"),
+            ),
+          ],
+        ),
       ),
     );
   }
